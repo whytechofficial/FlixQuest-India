@@ -275,10 +275,12 @@ Contributions, feature suggestions, design ideas, and translations are always we
 
 <div align="center">
   <h3>Support the Project</h3>
+  <p><i>Original FlixQuest developer</i></p>
   <a href="https://www.buymeacoffee.com/cinemaxapp">
     <img src="https://i.ibb.co/Tr4sC5X/bmc-button.png" height="60" alt="Buy Me A Coffee — original FlixQuest developer">
   </a>
   <br><br>
+  <p><i>FlixQuest India (fork) developer</i></p>
   <a href="https://www.buymeacoffee.com/AadilSamjeed">
     <img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=AadilSamjeed&button_colour=BD5FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" height="60" alt="Buy Me A Coffee — India edition">
   </a>
