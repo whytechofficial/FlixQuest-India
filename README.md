@@ -276,8 +276,10 @@ Contributions, feature suggestions, design ideas, and translations are always we
 <div align="center">
   <h3>Support the Project</h3>
   <a href="https://www.buymeacoffee.com/cinemaxapp">
-    <img src="https://i.ibb.co/Tr4sC5X/bmc-button.png" height="60" alt="Buy Me A Coffee">
+    <img src="https://i.ibb.co/Tr4sC5X/bmc-button.png" height="60" alt="Buy Me A Coffee — original FlixQuest developer">
   </a>
+  <br><br>
+  <a href="https://www.buymeacoffee.com/AadilSamjeed">☕ Support the India edition (Jio proxy & Firebase costs)</a>
 </div>
 
 ---
