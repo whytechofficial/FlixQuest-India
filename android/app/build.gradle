@@ -1,0 +1,118 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+    // id "com.google.firebase.crashlytics" // removed
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+// Set startapp.appId in android/local.properties (or STARTAPP_APP_ID in the
+// build environment) for production. The fallback is Start.io's documented
+// demo application ID so local builds never send impressions to a real app.
+def startAppId = localProperties.getProperty('startapp.appId') ?:
+        System.getenv('STARTAPP_APP_ID') ?: '205489527'
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    namespace 'dev.beamlak.flixquest_v2'
+    compileSdk 36
+    // ndkVersion "28.2.13676358" // removed for sandbox build
+    buildToolsVersion "36.0.0"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
+    defaultConfig {
+        applicationId "dev.beamlak.flixquest_v2.jiofix"
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion 36
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        multiDexEnabled true
+        manifestPlaceholders = [startAppAppId: startAppId]
+    }
+
+    signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+   
+   buildTypes {
+       release {
+           signingConfig signingConfigs.release
+           shrinkResources false
+           minifyEnabled false
+       }
+   }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+    // Declared directly so the app can call the StartAppSDK consent APIs in
+    // FlixQuestApplication. The plugin's own dependency is runtime-only.
+    implementation 'com.startapp:inapp-sdk:5.3.1'
+    constraints {
+        // startapp_sdk declares a floating [5.0.0,6) range. 5.3.2 requires
+        // compileSdk 37; pin the newest 5.x release compatible with this app's 36.
+        implementation('com.startapp:inapp-sdk:5.3.1') {
+            version { strictly '5.3.1' }
+        }
+    }
+    def media3Version = '1.8.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "androidx.media3:media3-database:$media3Version"
+    implementation "androidx.media3:media3-datasource:$media3Version"
+    implementation "androidx.media3:media3-exoplayer:$media3Version"
+    implementation "androidx.media3:media3-exoplayer-dash:$media3Version"
+    implementation "androidx.media3:media3-exoplayer-hls:$media3Version"
+    implementation "androidx.media3:media3-ui:$media3Version"
+    implementation "androidx.media3:media3-transformer:$media3Version"
+}

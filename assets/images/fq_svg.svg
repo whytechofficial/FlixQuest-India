@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 289 443" width="289" height="443">
+  <!-- The FlixQuest mark in outline: two bands and a wedge at 30 degrees. -->
+  <g fill="none" stroke="#000000" stroke-width="20" stroke-linejoin="round">
+    <path d="M16.0 123.8 L200.0 17.5 L263.1 54.0 L16.0 196.7 Z"/>
+    <path d="M16.0 255.8 L162.0 171.5 L225.1 207.9 L16.0 328.7 Z"/>
+    <path d="M26.0 380.0 L94.0 340.7 L94.0 419.3 Z"/>
+  </g>
+</svg>
