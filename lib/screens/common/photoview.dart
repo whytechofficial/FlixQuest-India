@@ -64,11 +64,11 @@ class _HeroPhotoViewState extends State<HeroPhotoView> {
     final stillFolderName = stillFolder;
     final flixquestPath = Directory('storage/emulated/0/$cinefolderName');
     final imageTypePath =
-        Directory('storage/emulated/0/FlixQuest/$imagefolderName');
+        Directory('storage/emulated/0/FliXtended/$imagefolderName');
     final posterPath =
-        Directory('storage/emulated/0/FlixQuest/$posterFolderName');
+        Directory('storage/emulated/0/FliXtended/$posterFolderName');
     final stillPath =
-        Directory('storage/emulated/0/FlixQuest/$stillFolderName');
+        Directory('storage/emulated/0/FliXtended/$stillFolderName');
 
     if ((await flixquestPath.exists())) {
       imageTypePath.create();
@@ -102,15 +102,15 @@ class _HeroPhotoViewState extends State<HeroPhotoView> {
             .analytics
             .trackImageDownloaded(imageType: widget.imageType);
       }
-      await createFolder('FlixQuest', 'Backdrops', 'Posters', 'Stills');
+      await createFolder('FliXtended', 'Backdrops', 'Posters', 'Stills');
       await FlutterDownloader.enqueue(
         url: url,
         fileName: '${widget.name}_${widget.imageType}_${createUniqueId()}.jpg',
         savedDir: widget.imageType == 'backdrop'
-            ? '/storage/emulated/0/FlixQuest/Backdrops/'
+            ? '/storage/emulated/0/FliXtended/Backdrops/'
             : widget.imageType == 'poster'
-                ? '/storage/emulated/0/FlixQuest/Posters/'
-                : '/storage/emulated/0/FlixQuest/Stills/',
+                ? '/storage/emulated/0/FliXtended/Posters/'
+                : '/storage/emulated/0/FliXtended/Stills/',
         showNotification: true,
         openFileFromNotification: true,
       );

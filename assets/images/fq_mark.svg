@@ -1,6 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 6 277 431" width="277" height="431">
-  <!-- The FlixQuest mark: two bands and a wedge at 30 degrees. -->
-  <path d="M6.0 118.0 L200.0 6.0 L283.1 54.0 L6.0 214.0 Z"/>
-  <path d="M6.0 250.0 L162.0 159.9 L245.1 207.9 L6.0 346.0 Z"/>
-  <path d="M6.0 380.0 L104.0 323.4 L104.0 436.6 Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="fGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#F5A623"/>
+    </linearGradient>
+    <linearGradient id="fGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9D6BF5"/>
+      <stop offset="100%" stop-color="#E8956B"/>
+    </linearGradient>
+  </defs>
+  <!-- FliXtended F: top bar, middle bar, bottom wedge with purple-to-gold gradient -->
+  <path d="M 70 155 L 290 60 Q 300 56 305 62 L 315 72 Q 320 78 312 82 L 95 175 Q 85 180 78 172 L 70 164 Q 64 158 70 155 Z" fill="url(#fGrad)"/>
+  <path d="M 70 255 L 230 175 Q 240 170 248 178 L 258 188 Q 264 194 256 198 L 95 275 Q 85 280 78 272 L 70 264 Q 64 258 70 255 Z" fill="url(#fGrad)"/>
+  <path d="M 95 295 L 155 265 Q 165 260 165 270 L 165 330 Q 165 340 155 335 L 95 305 Q 88 300 95 295 Z" fill="url(#fGrad2)"/>
 </svg>

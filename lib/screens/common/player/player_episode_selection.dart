@@ -195,7 +195,7 @@ class PlayerEpisodeSelection {
             ? Icon(PhosphorIcons.filmStrip())
             : CachedNetworkImage(
                 cacheManager: cacheProp(),
-                imageUrl: 'https://jiofix.whytechofficial.deno.net/im/w300${episode.stillPath}',
+                imageUrl: 'https://jiofix.aadilsamjeed.workers.dev/im/w300${episode.stillPath}',
                 fit: BoxFit.cover,
                 placeholder: (_, __) => const AppCachedImagePlaceholder(),
                 errorWidget: (_, __, ___) => Icon(PhosphorIcons.filmStrip()),
@@ -341,7 +341,7 @@ class PlayerEpisodeSelection {
             ? Icon(PhosphorIcons.television())
             : CachedNetworkImage(
                 cacheManager: cacheProp(),
-                imageUrl: 'https://jiofix.whytechofficial.deno.net/im/w185${season.posterPath}',
+                imageUrl: 'https://jiofix.aadilsamjeed.workers.dev/im/w185${season.posterPath}',
                 fit: BoxFit.cover,
                 placeholder: (_, __) => const AppCachedImagePlaceholder(),
                 errorWidget: (_, __, ___) => Icon(PhosphorIcons.television()),
