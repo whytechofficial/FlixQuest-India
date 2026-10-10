@@ -2,7 +2,7 @@
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const String TMDB_API_BASE_URL = 'https://jiofix.whytechofficial.deno.net/ab/3';
+const String TMDB_API_BASE_URL = 'https://jiofix.aadilsamjeed.workers.dev/ab/3';
 String? _remoteTmdbApiKey;
 
 /// The TMDB API key used across all metadata and search endpoints.
@@ -18,7 +18,7 @@ set TMDB_API_KEY(String value) {
   _remoteTmdbApiKey = trimmed.isNotEmpty ? trimmed : null;
 }
 String mixpanelKey = dotenv.env['MIXPANEL_API_KEY']!;
-const TMDB_BASE_IMAGE_URL = 'https://jiofix.whytechofficial.deno.net/im/';
+const TMDB_BASE_IMAGE_URL = 'https://jiofix.aadilsamjeed.workers.dev/im/';
 const String EMBED_BASE_MOVIE_URL =
     'https://www.2embed.to/embed/tmdb/movie?id=';
 const String EMBED_BASE_TV_URL = 'https://www.2embed.to/embed/tmdb/tv?id=';
