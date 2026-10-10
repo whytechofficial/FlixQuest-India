@@ -1,5 +1,8 @@
 import 'common.dart';
+import 'castle.dart';
 import 'names.dart';
+import 'netmirror.dart';
+import 'mxplayer.dart';
 import 'scraper_api.dart';
 import 'vixsrc.dart';
 
@@ -81,10 +84,17 @@ abstract final class ProviderLoader {
     required int movieId,
     required String scraperApiUrl,
     bool full = false,
+    String? title,
   }) {
     switch (provider.type) {
       case VideoProviderType.directVixSrc:
         return VixSrc.loadMovie(movieId);
+      case VideoProviderType.directCastle:
+        return Castle.loadMovie(movieId: movieId, title: title);
+      case VideoProviderType.directNetMirror:
+        return NetMirror.loadMovie(tmdbId: movieId);
+      case VideoProviderType.directMxPlayer:
+        return MxPlayerDirect.loadMovie(tmdbId: movieId, title: title);
       case VideoProviderType.scraperApi:
         final providerId = provider.apiId;
         if (providerId == null || providerId.isEmpty) {
@@ -107,6 +117,7 @@ abstract final class ProviderLoader {
     required int episodeNumber,
     required String scraperApiUrl,
     bool full = false,
+    String? title,
   }) {
     switch (provider.type) {
       case VideoProviderType.directVixSrc:
@@ -114,6 +125,26 @@ abstract final class ProviderLoader {
           tvId: tvId,
           seasonNumber: seasonNumber,
           episodeNumber: episodeNumber,
+        );
+      case VideoProviderType.directCastle:
+        return Castle.loadEpisode(
+          tvId: tvId,
+          seasonNumber: seasonNumber,
+          episodeNumber: episodeNumber,
+          title: title,
+        );
+      case VideoProviderType.directNetMirror:
+        return NetMirror.loadEpisode(
+          tmdbId: tvId,
+          seasonNumber: seasonNumber,
+          episodeNumber: episodeNumber,
+        );
+      case VideoProviderType.directMxPlayer:
+        return MxPlayerDirect.loadTvEpisode(
+          tmdbId: tvId,
+          season: seasonNumber,
+          episode: episodeNumber,
+          title: title,
         );
       case VideoProviderType.scraperApi:
         final providerId = provider.apiId;

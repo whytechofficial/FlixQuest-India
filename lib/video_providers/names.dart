@@ -1,5 +1,8 @@
 enum VideoProviderType {
   directVixSrc,
+  directCastle,
+  directNetMirror,
+  directMxPlayer,
   scraperApi,
 }
 
@@ -39,9 +42,9 @@ class VideoProvider {
   String get contentDescription {
     final value = content?.trim();
     if (value != null && value.isNotEmpty) return value;
-    return type == VideoProviderType.directVixSrc
-        ? 'Direct provider'
-        : 'Streaming provider';
+    return type == VideoProviderType.scraperApi
+        ? 'Streaming provider'
+        : 'Direct provider';
   }
 
   static const directVixSrc = VideoProvider(
@@ -50,6 +53,32 @@ class VideoProvider {
     codeName: 'direct:vixsrc',
     type: VideoProviderType.directVixSrc,
     apiId: 'vixsrc',
+  );
+
+  static const directCastle = VideoProvider(
+    fullName: 'Castle',
+    alias: 'Castle Direct',
+    codeName: 'direct:castle',
+    type: VideoProviderType.directCastle,
+    apiId: 'castle',
+  );
+
+  static const directNetMirror = VideoProvider(
+    fullName: 'NetMirror',
+    alias: 'NetMirror Direct',
+    codeName: 'direct:netmirror',
+    content: 'Movies and TV | Multi-quality MP4 | Subtitles',
+    type: VideoProviderType.directNetMirror,
+    apiId: 'netmirror',
+  );
+
+  static const directMxPlayer = VideoProvider(
+    fullName: 'MX Player',
+    alias: 'MX Player Direct',
+    codeName: 'direct:mxplayer',
+    content: 'Movies and TV | Indian catalog | HLS',
+    type: VideoProviderType.directMxPlayer,
+    apiId: 'mxplayer',
   );
 
   factory VideoProvider.scraper({

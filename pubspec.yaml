@@ -3,7 +3,7 @@ description: A Flutter movie app.
 
 publish_to: "none"
 
-version: 4.2.0+6
+version: 4.3.0+8
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -38,6 +38,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   flutter_download_manager: ^0.5.5
   flutter_downloader: ^1.11.10
+  encrypt: ^5.0.3
   flutter_local_notifications: ^18.0.1
   flutter_localization: ^0.2.2
   flutter_svg: ^2.0.10+1
