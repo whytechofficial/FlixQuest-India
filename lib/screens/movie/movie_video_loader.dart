@@ -121,6 +121,9 @@ class _MovieVideoLoaderState extends State<MovieVideoLoader> {
     // even if the scraper API also exposes a provider named "vixsrc". The
     // user's configured order from "Change Providers Order" is respected as-is.
     providers.add(VideoProvider.directVixSrc);
+    providers.add(VideoProvider.directCastle);
+    providers.add(VideoProvider.directNetMirror);
+    providers.add(VideoProvider.directMxPlayer);
     final orderedProviders = settings.orderStreamProviders(providers);
     if (!mounted) return;
     setState(() {
@@ -402,6 +405,7 @@ class _MovieVideoLoaderState extends State<MovieVideoLoader> {
           movieId: _metadata.movieId!,
           scraperApiUrl: _scraperApiUrl,
           full: widget.download,
+          title: _metadata.movieName,
         );
       },
       onResult: (index, provider, result) {

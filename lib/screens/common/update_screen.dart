@@ -91,7 +91,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
             context: context,
             title: 'Update required',
             content: const Text(
-                'Update FlixQuest to continue watching. You can also exit the app.'),
+                'Update FliXtended to continue watching. You can also exit the app.'),
             actions: [
               TvDialogAction(
                   label: 'Return to update',
@@ -176,9 +176,9 @@ class _UpdateScreenState extends State<UpdateScreen> {
           : _packageInfo == null
               ? 'Checking your installed version…'
               : available
-                  ? 'FlixQuest $version is available. Installed: ${_packageInfo!.version}. '
+                  ? 'FliXtended $version is available. Installed: ${_packageInfo!.version}. '
                       '${_forced ? 'Update to continue watching.' : 'Get the latest improvements for your TV.'}'
-                  : 'You’re up to date. FlixQuest ${_packageInfo!.version}',
+                  : 'You’re up to date. FliXtended ${_packageInfo!.version}',
       children: [
         if (_error != null)
           TvUpdateAction(
@@ -250,7 +250,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
       return EmptyState(
         icon: PhosphorIcons.checkCircle(),
         title: tr('no_update'),
-        message: 'FlixQuest v${_packageInfo!.version}',
+        message: 'FliXtended v${_packageInfo!.version}',
       );
     }
     final remoteBuild = AppUpdateService.effectiveBuildNumber(
@@ -378,7 +378,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
           type: 'application/vnd.android.package-archive');
       if (result.type != ResultType.done && mounted) {
         _showDownloadError(
-            '${result.message}\nIf Android asks, allow FlixQuest to install apps, then select Install again.');
+            '${result.message}\nIf Android asks, allow FliXtended to install apps, then select Install again.');
       }
     } catch (error) {
       if (mounted) _showDownloadError(error.toString());
@@ -497,7 +497,7 @@ class _DownloadCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'FlixQuest v$appVersion',
+                    'FliXtended v$appVersion',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -674,7 +674,7 @@ class _UpdateBottomState extends State<UpdateBottom> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Expanded(
-                    child: Text('Update available • FlixQuest $version',
+                    child: Text('Update available • FliXtended $version',
                         style: TextStyle(
                             color: colors.onSurface,
                             fontSize: 20,

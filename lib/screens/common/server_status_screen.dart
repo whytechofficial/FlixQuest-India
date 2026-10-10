@@ -2,6 +2,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,13 @@ class _ServerStatusScreenState extends State<ServerStatusScreen> {
   String? _error;
   ProviderHealthSnapshot? _snapshot;
   final Set<String> _revealedProviderIds = <String>{};
+  final http.Client _directCheckClient = http.Client();
+
+  @override
+  void dispose() {
+    _directCheckClient.close();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -45,14 +53,69 @@ class _ServerStatusScreenState extends State<ServerStatusScreen> {
           context.read<AppDependencyProvider>().flixquestAPIURLV2;
       final snapshot =
           await ScraperApi(scraperApiUrl).getProviderHealthStatus();
+      // Check direct providers (Castle, NetMirror, MX Player) in parallel —
+      // these don't go through the scraper API, so they need their own check.
+      final directResults = await _checkDirectProviders();
+      final allProviders = [...snapshot.providers, ...directResults];
+      final online = allProviders.where((p) => p.online).length;
+      final merged = ProviderHealthSnapshot(
+        interval: snapshot.interval,
+        total: allProviders.length,
+        online: online,
+        offline: allProviders.length - online,
+        providers: allProviders,
+        startedAt: snapshot.startedAt,
+        updatedAt: snapshot.updatedAt,
+        methodology: snapshot.methodology,
+      );
       if (!mounted) return;
-      setState(() => _snapshot = snapshot);
+      setState(() => _snapshot = merged);
     } catch (error) {
       if (!mounted) return;
       setState(() => _error = error.toString());
     } finally {
       if (mounted) setState(() => _checking = false);
     }
+  }
+
+  /// Pings the three direct providers (Castle, NetMirror, MX Player) and
+  /// returns a health result for each. Any HTTP response (even 4xx) means
+  /// the server is up; only connection failures, timeouts, or 5xx = offline.
+  Future<List<ProviderHealthResult>> _checkDirectProviders() async {
+    const checks = <MapEntry<String, String>>[
+      MapEntry('direct:castle', 'https://api.fstcy.com'),
+      MapEntry('direct:netmirror', 'https://net79.cc'),
+      MapEntry('direct:mxplayer', 'https://api.mxplayer.in'),
+    ];
+    const names = <String, String>{
+      'direct:castle': 'Castle Direct',
+      'direct:netmirror': 'NetMirror Direct',
+      'direct:mxplayer': 'MX Player Direct',
+    };
+    final results = await Future.wait(
+      checks.map((check) async {
+        final stopwatch = Stopwatch()..start();
+        var online = false;
+        try {
+          final response = await _directCheckClient
+              .get(Uri.parse(check.value))
+              .timeout(const Duration(seconds: 10));
+          online = response.statusCode < 500;
+        } catch (_) {
+          online = false;
+        } finally {
+          stopwatch.stop();
+        }
+        return ProviderHealthResult(
+          id: check.key,
+          alias: names[check.key] ?? check.key,
+          name: names[check.key],
+          online: online,
+          requestTime: stopwatch.elapsed,
+        );
+      }),
+    );
+    return results;
   }
 
   @override

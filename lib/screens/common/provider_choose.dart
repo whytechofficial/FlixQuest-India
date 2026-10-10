@@ -52,6 +52,9 @@ class _ProviderChooseScreenState extends State<ProviderChooseScreen> {
       error = exception.toString();
     }
     available.add(VideoProvider.directVixSrc);
+    available.add(VideoProvider.directCastle);
+    available.add(VideoProvider.directNetMirror);
+    available.add(VideoProvider.directMxPlayer);
 
     if (!mounted) return;
     setState(() {
