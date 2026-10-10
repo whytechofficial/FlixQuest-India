@@ -45,13 +45,13 @@ class _HeroPhotoViewState extends State<HeroPhotoView> {
     final personImageFolderName = personImageFolder;
     final flixquestPath = Directory('storage/emulated/0/$cinefolderName');
     final imageTypePath =
-        Directory('storage/emulated/0/FlixQuest/$imagefolderName');
+        Directory('storage/emulated/0/FliXtended/$imagefolderName');
     final posterPath =
-        Directory('storage/emulated/0/FlixQuest/$posterFolderName');
+        Directory('storage/emulated/0/FliXtended/$posterFolderName');
     final stillPath =
-        Directory('storage/emulated/0/FlixQuest/$stillFolderName');
+        Directory('storage/emulated/0/FliXtended/$stillFolderName');
     final personImagePath =
-        Directory('storage/emulated/0/FlixQuest/$personImageFolderName');
+        Directory('storage/emulated/0/FliXtended/$personImageFolderName');
 
     if ((await flixquestPath.exists())) {
       imageTypePath.create();
@@ -116,12 +116,12 @@ class _HeroPhotoViewState extends State<HeroPhotoView> {
 
     if (externalStatus.isGranted) {
       await createFolder(
-          'FlixQuest', 'Backdrops', 'Posters', 'Stills', 'Person Images');
+          'FliXtended', 'Backdrops', 'Posters', 'Stills', 'Person Images');
       await FlutterDownloader.enqueue(
         url: url,
         fileName: '${widget.name}_${createUniqueId()}.jpg',
         headers: {}, // optional: header send with url (auth token etc)
-        savedDir: '/storage/emulated/0/FlixQuest/Person Images/',
+        savedDir: '/storage/emulated/0/FliXtended/Person Images/',
         showNotification:
             true, // show download progress in status bar (for Android)
         openFileFromNotification:

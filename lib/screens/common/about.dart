@@ -40,7 +40,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: AppSpace.lg),
               Text(
-                'FlixQuest India',
+                'FliXtended',
                 textAlign: TextAlign.center,
                 style: AppType.scaled(context, AppType.pageTitle)
                     .copyWith(color: palette.foreground),
@@ -59,7 +59,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: AppSpace.sm),
               Text(
-                'Indian edition - Jio connectivity fix by Aadil Samjeed',
+                'Extended edition by Aadil Samjeed',
                 textAlign: TextAlign.center,
                 style: AppType.cardTitle.copyWith(color: palette.foreground),
               ),
@@ -103,7 +103,7 @@ class AboutPage extends StatelessWidget {
                       color: palette.mutedText,
                     ),
                     onTap: () => _open(
-                      'https://github.com/beamlakaschalew/cinemax/issues/new/choose',
+                      'https://github.com/whytechofficial/FlixQuest-India/issues/new/choose',
                     ),
                   ),
                 ],
@@ -115,22 +115,22 @@ class AboutPage extends StatelessWidget {
                   _LinkRow(
                     icon: PhosphorIcons.instagramLogo(),
                     label: 'Instagram',
-                    uri: 'https://instagram.com/flixquestapp',
+                    uri: 'https://instagram.com/sanji.d.chelari',
                   ),
                   _LinkRow(
                     icon: PhosphorIcons.telegramLogo(),
                     label: 'Telegram',
-                    uri: 'https://t.me/flixquestapp',
+                    uri: 'https://t.me/FliXtended',
                   ),
                   _LinkRow(
                     icon: PhosphorIcons.githubLogo(),
                     label: 'GitHub',
-                    uri: 'https://github.com/beamlakaschalew/cinemax',
+                    uri: 'https://github.com/whytechofficial/FlixQuest-India',
                   ),
                   _LinkRow(
                     icon: PhosphorIcons.envelopeSimple(),
-                    label: 'flixquestapp@gmail.com',
-                    uri: 'mailto:flixquestapp@gmail.com',
+                    label: 'aadilsamjeed@gmail.com',
+                    uri: 'mailto:aadilsamjeed@gmail.com',
                   ),
                 ],
               ),

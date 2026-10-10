@@ -643,7 +643,7 @@ class _HomeHeader extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Semantics(
                       header: true,
-                      label: 'FlixQuest',
+                      label: 'FliXtended',
                       excludeSemantics: true,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -651,8 +651,6 @@ class _HomeHeader extends StatelessWidget {
                           AppLogo(
                             fallbackAsset: 'assets/images/fq_mark.svg',
                             height: 26,
-                            fallbackColor:
-                                Theme.of(context).colorScheme.primary,
                           ),
                           const SizedBox(width: 8),
                           // A logo, so it keeps its size at any text size,
@@ -662,7 +660,7 @@ class _HomeHeader extends StatelessWidget {
                               fit: BoxFit.scaleDown,
                               alignment: AlignmentDirectional.centerStart,
                               child: Text(
-                                'FLIXQUEST',
+                                'FLIXTENDED',
                                 textScaler: TextScaler.noScaling,
                                 style: TextStyle(
                                   color: palette.foreground,
