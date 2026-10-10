@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "778393541460",
+    "project_id": "flixquest-india",
+    "storage_bucket": "flixquest-india.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778393541460:android:fd3fa2a51e743d2be846c1",
+        "android_client_info": {
+          "package_name": "dev.beamlak.flixquest_v2.jiofix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778393541460-ni0gb09is8ed4g84qqg8dd5k08lnme8r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.beamlak.flixquest_v2.jiofix",
+            "certificate_hash": "08b57aa76222a90e02410e46689961fa968a75b4"
+          }
+        },
+        {
+          "client_id": "778393541460-ab4tav7vr0uak0uk69tjmfsteriuhq03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO-dTMmIsrWzG0zS4BcxB6SHtxmikRvNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778393541460-ab4tav7vr0uak0uk69tjmfsteriuhq03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
