@@ -1,14 +1,12 @@
-# FlixQuest India
+# FliXtended
 
-> **India edition of [FlixQuest](https://github.com/beamlakaschalew/flixquest)** (GPLv3) — rebuilt from upstream commit `51a4ec9` with TMDB API/image traffic routed through a configurable proxy so metadata loads on Jio networks without VPN or DNS changes, plus a real Firebase backend (`flixquest-india` project) for login and sync. "Indian edition - Jio connectivity fix by Aadil Samjeed". Original developer credits preserved; see [LICENSE](LICENSE). Everything below is the upstream README.
-
----
+> **Extended edition of [FlixQuest](https://github.com/beamlakaschalew/flixquest)** (GPLv3) by **Aadil Samjeed** — rebuilt from upstream with TMDB API/image traffic routed through a Cloudflare Workers proxy so metadata loads on Jio networks without VPN or DNS changes, plus a real Firebase backend (`flixquest-india` project) for login, sync, and in-app updates. Original developer credits preserved; see [LICENSE](LICENSE).
 
 <p align="center">
-  <img alt="FlixQuest" src="assets/images/FlixQuest.png" width="180">
+  <img alt="FliXtended" src="assets/images/logo.png" width="180">
 </p>
 
-<h1 align="center">FlixQuest</h1>
+<h1 align="center">FliXtended</h1>
 
 <p align="center">
   <strong>A modern, open-source streaming application for Movies, TV Shows, and Live TV built with Flutter.</strong><br>
@@ -16,11 +14,17 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white" alt="Flutter">
+  <img src="https://img.shields.io/badge/Flutter-3.35-02569B?logo=flutter&logoColor=white" alt="Flutter">
   <img src="https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white" alt="Dart">
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20Android%20TV-3DDC84?logo=android&logoColor=white" alt="Platform">
-  <img src="https://img.shields.io/badge/Version-4.0.0-blue" alt="Version">
+  <img src="https://img.shields.io/badge/Version-4.3.0-blue" alt="Version">
   <img src="https://img.shields.io/badge/License-GPL--3.0-green" alt="License">
+</p>
+
+<p align="center">
+  <a href="https://github.com/whytechofficial/FlixQuest-India/releases">
+    <img src="https://img.shields.io/badge/Download-Latest%20APK-8B5CF6?style=for-the-badge&logo=android&logoColor=white" alt="Download latest APK">
+  </a>
 </p>
 
 ---
@@ -48,13 +52,18 @@
 - **Stream Recovery & Buffering**: Smart playback recovery (90-second window), auto-reconnect, and optimized live buffering.
 - **Local Caching**: Fast SQLite caching for live channels and event schedules.
 
-### 🚀 Multi-Source Video Providers & Scraper API v2
+### 🚀 Multi-Source Video Providers (16 Total)
 
-- **Dynamic Provider System**: Integrated with **FlixQuest Scraper API v2** for scraping high-quality streams.
-- **Live Provider Health Status**: Real-time provider uptime monitoring (`/providers/status`) with in-app status indicators.
-- **Direct Fallback Provider**: Built-in direct VixSrc provider fallback.
+- **Dynamic Provider System**: Integrated with **FlixQuest Scraper API v2** for scraping high-quality streams (13 providers, server address configurable via Firebase Remote Config).
+- **Direct Providers**: **Castle**, **NetMirror**, and **MX Player** talk to their own APIs directly — no scraper server in between. MX Player streams are multi-audio (e.g. Hindi, Tamil, Telugu, Malayalam where available).
+- **Live Provider Health Status**: Real-time provider uptime monitoring with in-app status indicators — check all 16 providers from **Check Server Status**.
 - **Custom Provider Prioritization**: Reorder and prioritize your preferred streaming providers in Settings.
 - **Stream Formats**: Full support for HLS (.m3u8), DASH (.mpd), and direct MP4 streams with custom header support.
+
+### 🛰️ Cloudflare TMDB Proxy (Jio Connectivity Fix)
+
+- TMDB API and image traffic is routed through a **Cloudflare Workers** proxy (`jiofix.aadilsamjeed.workers.dev`), so posters, backdrops and metadata load on Jio networks without a VPN or DNS changes.
+- Proxy source: `~/workspace/jiofix-app/tmdb-proxy-cloudflare.js` (deploy your own worker and point the app at it via `lib/constants/app_constants.dart`).
 
 ### 💬 Comprehensive Subtitle Management
 
@@ -73,19 +82,28 @@
 ### 🎨 Modern UI, Ambient Glow & Seasonal Themes
 
 - **Phosphor Icons**: Clean, consistent icon set using Phosphor Flutter icons across the entire app.
+- **FliXtended Branding**: Rebranded across the app in all 4 supported languages — launcher icon, splash screen, headers, and About screen carry the new gradient-F logo (with monochrome themed-icon support).
 - **Ambient Mode**: Dynamic color palette extraction from movie/show posters and backdrops for an immersive ambient background glow.
-- **Occasional & Seasonal Themes**: Dynamic holiday themes (Christmas, New Year, Halloween, Valentine's Day, Easter, Eid, Diwali, Ethiopian New Year, etc.) with animated vector particle overlays (snow, fireworks, bats, hearts, adey flowers, confetti, stars, sparkles). Configurable via Firebase Remote Config.
+- **Occasional & Seasonal Themes**: Dynamic holiday themes (Christmas, New Year, Halloween, Valentine's Day, Easter, Eid, Diwali, etc.) with animated vector particle overlays (snow, fireworks, bats, hearts, confetti, stars, sparkles). Configurable via Firebase Remote Config.
 - **Themes**: Light, Dark, AMOLED Pure Black, and Material 3 Dynamic Color palettes.
+
+### 👤 My FliXtended Tab
+
+- A dedicated tab for your profile, bookmarks, downloads, recently watched, watchlist and settings — everything personal in one place.
 
 ### 🔐 User Profiles & Cloud Synchronization
 
-- **Firebase Authentication**: User accounts with email/password authentication, profile management, and account deletion.
+- **Firebase Authentication**: User accounts with email/password and Google sign-in, profile management, and account deletion.
 - **Cross-Device Bookmark Sync**: Dual-layer bookmark synchronization between local SQLite and Cloud Firestore.
 - **Recently Watched & Resume**: Track watch progress across movies and episodes with quick resume playback.
 
+### 🔄 In-App Updates
+
+- The app checks **Firebase Remote Config** for `latest_version`, `latest_build_number`, `app_download_url`, `forced_update` and `change_log` — so new releases can be pushed to users with an in-app update prompt, no store required.
+
 ### 🌍 Multi-Language Localization
 
-- Complete internationalization powered by `easy_localization` supporting multiple languages including English, Spanish, Arabic, Hindi, and more.
+- Complete internationalization powered by `easy_localization`, including English, Malayalam, Hindi, and more.
 
 ---
 
@@ -102,7 +120,7 @@
     <td align="center"><b>Episode Browser</b><br><img src="docs/screenshots/episodes.jpg" alt="Episode Browser" width="220"/></td>
     <td align="center"><b>Watch & Download</b><br><img src="docs/screenshots/episode-detail.jpg" alt="Episode Detail" width="220"/></td>
     <td align="center"><b>Offline Downloads</b><br><img src="docs/screenshots/downloads.jpg" alt="Offline Downloads" width="220"/></td>
-    <td align="center"><b>Live TV & Sports</b><br><img src="docs/screenshots/live-tv.jpg" alt="Live TV" width="220"/></td>
+    <td align="center"><b>Live TV & Sports</b><br><img src="docs/screenshots/live-tv.jpg" alt="Live TV & Sports" width="220"/></td>
   </tr>
   <tr>
     <td colspan="4" align="center"><b>Immersive Video Player</b><br><img src="docs/screenshots/player.jpg" alt="Video Player" width="800"/></td>
@@ -111,19 +129,25 @@
 
 ---
 
+## ⬇️ Download
+
+Grab the latest APK from the [**Releases**](https://github.com/whytechofficial/FlixQuest-India/releases) page. Install it directly on your Android phone, tablet, or Android TV — no Google Play needed.
+
+---
+
 ## ⚙️ Environment Variables & API Keys
 
-FlixQuest uses `flutter_dotenv` to load environment variables. Create a `.env` file in the root directory of the project:
+FliXtended uses `flutter_dotenv` to load environment variables. Create a `.env` file in the root directory of the project:
 
 ```env
 # Required: TMDB API Key for movie and TV show metadata
-TMDB_API_KEY="your_tmdb_api_key"
+TMDB_API_KEY=<redacted>
 
 # Required: FlixQuest Scraper API v2 instance URL
 FLIXQUEST_API_URL="https://your-flixquest-api-instance.com"
 
 # Optional: Mixpanel project token for general analytics
-MIXPANEL_API_KEY="your_mixpanel_api_key"
+MIXPANEL_API_KEY=<redacted>
 ```
 
 ### Obtaining API Keys
@@ -136,7 +160,7 @@ MIXPANEL_API_KEY="your_mixpanel_api_key"
 
 ## 🕷️ FlixQuest Scraper API v2
 
-FlixQuest communicates with **FlixQuest Scraper API v2** for resolving streaming sources. The backend service is closed-source; please contact [flixquestapp@gmail.com](mailto:flixquestapp@gmail.com) for support or API instance access.
+FliXtended communicates with **FlixQuest Scraper API v2** for resolving streaming sources. The backend service is closed-source; please contact [flixquestapp@gmail.com](mailto:flixquestapp@gmail.com) for support or API instance access.
 
 The client-side API contract and payload schemas are documented in [`openapi.json`](openapi.json).
 
@@ -155,13 +179,13 @@ Key endpoints consumed by the app:
 
 ## 🔥 Firebase Configuration
 
-FlixQuest uses Firebase for several services:
+FliXtended uses Firebase for several services:
 
 | Service                       | Purpose                                                                                                                                                                                                                             |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Firebase Authentication**   | User authentication, profile management, and session handling.                                                                                                                                                                      |
+| **Firebase Authentication**   | User authentication (email/password + Google), profile management, session handling, and account deletion.                                                                                                                         |
 | **Cloud Firestore**           | Cloud bookmark synchronization across multiple devices.                                                                                                                                                                             |
-| **Firebase Remote Config**    | Dynamic configuration for feature toggles (Watch now, Download, Live TV), app logos, seasonal themes, and vector animation effects. See [`docs/firebase_remote_config.md`](docs/firebase_remote_config.md) for full schema details. |
+| **Firebase Remote Config**    | Dynamic configuration for feature toggles (Watch now, Download, Live TV), scraper server URLs, seasonal themes, and **in-app update control** (`latest_version`, `latest_build_number`, `app_download_url`, `forced_update`, `change_log`). See [`docs/firebase_remote_config.md`](docs/firebase_remote_config.md) for full schema details. |
 | **Firebase Cloud Messaging**  | Background notifications and alerts.                                                                                                                                                                                                |
 | **Firebase In-App Messaging** | Dynamic in-app banners and update notices.                                                                                                                                                                                          |
 | **Firebase Analytics**        | Usage and performance analytics.                                                                                                                                                                                                    |
@@ -195,7 +219,7 @@ better_player_plus:
 
 ### Prerequisites
 
-- **Flutter SDK**: `>=3.0.0 <4.0.0`
+- **Flutter SDK**: `3.35.x` (see `.fvmrc` — newer/older SDKs can break dependencies)
 - **Dart SDK**: `^3.0.0`
 - **Android SDK / NDK**: Android SDK 34+, Java 17
 
@@ -204,8 +228,8 @@ better_player_plus:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/BeamlakAschalew/flixquest.git
-   cd flixquest
+   git clone https://github.com/whytechofficial/FlixQuest-India.git
+   cd FlixQuest-India
    ```
 
 2. **Clone the custom better_player repository** (if using local path):
@@ -213,7 +237,7 @@ better_player_plus:
    ```bash
    cd ..
    git clone https://github.com/BeamlakAschalew/flixquest-betterplayer.git
-   cd flixquest
+   cd FlixQuest-India
    ```
 
 3. **Configure Environment Variables**:
@@ -248,6 +272,8 @@ better_player_plus:
    flutter build apk --release
    ```
 
+> **Tip**: To point the app at your own TMDB proxy worker, update the proxy URLs in `lib/constants/app_constants.dart`. To point the scraper providers at your own server, update `flixquest_api_url_v2` / `flixquest_api_instances` in Firebase Remote Config.
+
 ---
 
 ## 🤝 Contributing
@@ -268,21 +294,21 @@ Contributions, feature suggestions, design ideas, and translations are always we
 ## ⚠️ Disclaimer
 
 - The developers of this application have no affiliation with content providers like TMDB, DaddyLive, or any third-party streaming websites.
-- FlixQuest **does not host or upload any video content**. All media is retrieved via public scrapers and third-party APIs.
+- FliXtended **does not host or upload any video content**. All media is retrieved via public scrapers and third-party APIs.
 - In case of copyright infringement, please contact the responsible hosting services or source providers directly.
 
 ---
 
 <div align="center">
   <h3>Support the Project</h3>
-  <p><i>Original FlixQuest developer</i></p>
+  <p><i>Original FlixQuest developer — Beamlak Aschalew</i></p>
   <a href="https://www.buymeacoffee.com/cinemaxapp">
     <img src="https://i.ibb.co/Tr4sC5X/bmc-button.png" height="60" alt="Buy Me A Coffee — original FlixQuest developer">
   </a>
   <br><br>
-  <p><i>FlixQuest India (fork) developer</i></p>
+  <p><i>FliXtended developer — Aadil Samjeed</i></p>
   <a href="https://www.buymeacoffee.com/AadilSamjeed">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=AadilSamjeed&button_colour=BD5FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" height="60" alt="Buy Me A Coffee — India edition">
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=AadilSamjeed&button_colour=BD5FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" height="60" alt="Buy Me A Coffee — FliXtended developer">
   </a>
 </div>
 
@@ -290,6 +316,7 @@ Contributions, feature suggestions, design ideas, and translations are always we
 
 ### 🙏 Credits & Integrations
 
+- **Beamlak Aschalew**: Original developer of [FlixQuest](https://github.com/beamlakaschalew/flixquest) — the foundation this extended edition is built on.
 - **TMDB API**: Media metadata, cast, crew, and artwork.
 - **Phosphor Icons**: Beautiful, consistent icon pack (`phosphor_flutter`).
 - **Matinee Flutter**: Initial UI inspiration and base architecture (`bimsina/Matinee-Flutter`).
@@ -298,5 +325,5 @@ Contributions, feature suggestions, design ideas, and translations are always we
 
 <p align="center">
   <i>GNU, but for Entertainment</i><br><br>
-  <strong>© 2022–2026 Beamlak Aschalew</strong>
+  <strong>© 2022–2026 Beamlak Aschalew · FliXtended © 2026 Aadil Samjeed</strong>
 </p>
