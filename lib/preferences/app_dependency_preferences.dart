@@ -94,6 +94,15 @@ class AppDependencies {
   static const MINIMUM_BUILD_NUMBER = 'minimum_build_number';
   static const APP_DOWNLOAD_URL = 'app_download_url';
   static const CHANGE_LOG = 'change_log';
+  static const DISMISSED_OPTIONAL_UPDATE_BUILD = 'dismissed_optional_update_build';
+
+  Future<int> getDismissedOptionalUpdateBuild() async {
+    return sharedPrefsSingleton.getInt(DISMISSED_OPTIONAL_UPDATE_BUILD) ?? 0;
+  }
+
+  Future<void> setDismissedOptionalUpdateBuild(int build) async {
+    await sharedPrefsSingleton.setInt(DISMISSED_OPTIONAL_UPDATE_BUILD, build);
+  }
 
   Future<void> setUpdateConfiguration({
     required bool forced,

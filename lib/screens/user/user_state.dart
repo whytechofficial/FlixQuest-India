@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import '../../flixquest_main.dart';
+import '../../preferences/app_dependency_preferences.dart';
 import '../../provider/app_dependency_provider.dart';
 import '../../services/app_update_service.dart';
 import '../../services/auth_session_controller.dart';
@@ -28,6 +30,8 @@ class UserState extends StatefulWidget {
 
 class _UserStateState extends State<UserState> {
   PackageInfo? _packageInfo;
+  bool _optionalPromptScheduled = false;
+  bool _optionalPromptShown = false;
 
   @override
   void initState() {
@@ -44,12 +48,56 @@ class _UserStateState extends State<UserState> {
     }
   }
 
+  /// Shows a dismissible "update available" popup once per released build,
+  /// for users whose update is optional (not forced).
+  Future<void> _maybeShowOptionalUpdate() async {
+    if (_optionalPromptShown) return;
+    _optionalPromptShown = true;
+    final info = _packageInfo;
+    if (info == null || !mounted) return;
+    final config = context.read<AppDependencyProvider>();
+    final remoteBuild = AppUpdateService.effectiveBuildNumber(
+      latestBuildNumber: config.latestBuildNumber,
+      minimumBuildNumber: config.minimumBuildNumber,
+    );
+    if (remoteBuild <= 0) return;
+    final prefs = AppDependencies();
+    final dismissed = await prefs.getDismissedOptionalUpdateBuild();
+    if (dismissed >= remoteBuild || !mounted) return;
+    final updateNow = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(tr('update_available')),
+        content: Text(tr('update_available_desc')),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(tr('later')),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(tr('update_now')),
+          ),
+        ],
+      ),
+    );
+    if (!mounted) return;
+    await prefs.setDismissedOptionalUpdateBuild(remoteBuild);
+    if (!mounted) return;
+    if (updateNow == true) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => const UpdateScreen(isForced: false),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final appDependency = context.watch<AppDependencyProvider>();
 
     if (widget.devicePresentation == DevicePresentation.handheld &&
-        appDependency.isForcedUpdate &&
         _packageInfo != null) {
       final isUpdateAvailable = AppUpdateService.isAvailable(
         packageInfo: _packageInfo!,
@@ -58,7 +106,24 @@ class _UserStateState extends State<UserState> {
         minimumBuildNumber: appDependency.minimumBuildNumber,
       );
       if (isUpdateAvailable) {
-        return const UpdateScreen(isForced: true);
+        final currentBuild =
+            int.tryParse(_packageInfo!.buildNumber) ?? 0;
+        // Builds below the remotely configured minimum are always forced
+        // (e.g. a broken old build), while everyone else follows the
+        // optional/forced flag.
+        final forceRequired = AppUpdateService.isForceRequired(
+          currentBuild: currentBuild,
+          minimumBuildNumber: appDependency.minimumBuildNumber,
+        );
+        if (appDependency.isForcedUpdate || forceRequired) {
+          return const UpdateScreen(isForced: true);
+        }
+        // Optional update: let the app open, then offer a dismissible popup.
+        if (!_optionalPromptScheduled) {
+          _optionalPromptScheduled = true;
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => _maybeShowOptionalUpdate());
+        }
       }
     }
 

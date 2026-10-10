@@ -136,7 +136,7 @@ class ReportErrorWidget extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () async {
                     await launchUrl(
-                      Uri.parse('https://t.me/flixquestgroup'),
+                      Uri.parse('https://t.me/FliXtended_Chats'),
                       mode: LaunchMode.externalApplication,
                     );
                   },

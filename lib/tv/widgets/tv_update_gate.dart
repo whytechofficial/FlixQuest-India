@@ -57,8 +57,12 @@ class _TvUpdateGateState extends State<TvUpdateGate>
     return FutureBuilder<PackageInfo>(
         future: _packageInfo,
         builder: (context, snapshot) {
-          _blocking = config.isForcedUpdate;
-          if (!_blocking) return widget.child;
+          // Assume blocking until the installed build is known, when either the
+          // global forced flag or a minimum-build requirement is configured.
+          _blocking = config.isForcedUpdate || config.minimumBuildNumber > 0;
+          if (!config.isForcedUpdate && config.minimumBuildNumber <= 0) {
+            return widget.child;
+          }
           if (!snapshot.hasData) {
             return TvKeymap(
                 onBack: SystemNavigator.pop,
@@ -89,8 +93,14 @@ class _TvUpdateGateState extends State<TvUpdateGate>
               remoteVersion: config.latestAppVersion,
               latestBuildNumber: config.latestBuildNumber,
               minimumBuildNumber: config.minimumBuildNumber);
-          _blocking = available;
-          if (!available) return widget.child;
+          final currentBuild =
+              int.tryParse(snapshot.data!.buildNumber) ?? 0;
+          final forceRequired = AppUpdateService.isForceRequired(
+            currentBuild: currentBuild,
+            minimumBuildNumber: config.minimumBuildNumber,
+          );
+          _blocking = available && (config.isForcedUpdate || forceRequired);
+          if (!_blocking) return widget.child;
           return Navigator(
               key: _updateNavigatorKey,
               onGenerateRoute: (_) => MaterialPageRoute<void>(

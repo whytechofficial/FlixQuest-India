@@ -11,6 +11,16 @@ class AppUpdateService {
     return latestBuildNumber > 0 ? latestBuildNumber : minimumBuildNumber;
   }
 
+  /// True when the installed build is below the remotely configured minimum
+  /// build, meaning this device must update even when the update is optional
+  /// for everyone else (e.g. a broken old build vs. a merely outdated one).
+  static bool isForceRequired({
+    required int currentBuild,
+    required int minimumBuildNumber,
+  }) {
+    return minimumBuildNumber > 0 && currentBuild < minimumBuildNumber;
+  }
+
   static bool isAvailable({
     required PackageInfo packageInfo,
     required String remoteVersion,

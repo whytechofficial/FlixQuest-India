@@ -214,6 +214,31 @@ class ScraperApi {
     Map<String, String> queryParameters,
   ) async {
     try {
+      final result = await _attemptLoad(path, queryParameters);
+      // Beamlak's server disabled full stream collection ("Full stream
+      // collection is disabled"). Downloads request full=true, so fall back
+      // to the first working server instead of failing every scraper
+      // provider. The client must stay open across both attempts, so it is
+      // closed here — not inside _attemptLoad.
+      if (!result.success &&
+          queryParameters['full'] == 'true' &&
+          (result.errorMessage ?? '')
+              .contains('Full stream collection is disabled')) {
+        final fallbackParams = Map<String, String>.from(queryParameters)
+          ..remove('full');
+        return await _attemptLoad(path, fallbackParams);
+      }
+      return result;
+    } finally {
+      if (_ownsClient) _client.close();
+    }
+  }
+
+  Future<ProviderLoadResult> _attemptLoad(
+    String path,
+    Map<String, String> queryParameters,
+  ) async {
+    try {
       final uri = _endpoint(path, queryParameters);
       _logRequest(uri);
       final response = await _get(uri, timeout: const Duration(minutes: 1));
@@ -288,8 +313,6 @@ class ScraperApi {
           errorMessage: 'Scraper request timed out');
     } catch (error) {
       return ProviderLoadResult(errorMessage: error.toString());
-    } finally {
-      if (_ownsClient) _client.close();
     }
   }
 
