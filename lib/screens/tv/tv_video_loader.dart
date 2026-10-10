@@ -104,6 +104,9 @@ class _TVVideoLoaderState extends State<TVVideoLoader> {
     }
 
     providers.add(VideoProvider.directVixSrc);
+    providers.add(VideoProvider.directCastle);
+    providers.add(VideoProvider.directNetMirror);
+    providers.add(VideoProvider.directMxPlayer);
     final orderedProviders = settings.orderStreamProviders(providers);
     if (!mounted) return;
     setState(() {
@@ -382,6 +385,7 @@ class _TVVideoLoaderState extends State<TVVideoLoader> {
           episodeNumber: widget.metadata.episodeNumber!,
           scraperApiUrl: _scraperApiUrl,
           full: widget.download,
+          title: widget.metadata.seriesName,
         );
       },
       onResult: (index, provider, result) {

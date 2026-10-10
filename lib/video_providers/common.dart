@@ -61,8 +61,11 @@ class RegularSubtitleLinks {
   String? url;
   String? language;
   Map<String, String>? headers;
+  // Pre-downloaded subtitle file content. When set, the player uses it
+  // directly instead of fetching [url], which avoids proxy/header issues.
+  String? content;
 
-  RegularSubtitleLinks({this.language, this.url, this.headers});
+  RegularSubtitleLinks({this.language, this.url, this.headers, this.content});
 
   RegularSubtitleLinks.fromJson(Map<String, dynamic> json) {
     url = json['url'] ?? json['file'];

@@ -143,7 +143,6 @@ class TvNavigationRailState extends State<TvNavigationRail> {
                       child: AppLogo(
                         fallbackAsset: 'assets/images/fq_mark.svg',
                         height: 24,
-                        fallbackColor: colors.primary,
                       ),
                     ),
                   ),
